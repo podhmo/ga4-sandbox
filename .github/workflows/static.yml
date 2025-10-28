@@ -31,6 +31,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "hello"
+          replace: "hello world"
+          include: "**/*.html"
+          regex: false        
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
