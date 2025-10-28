@@ -49,25 +49,14 @@ jobs:
       - name: Find and Replace
         shell: bash
         run: |
-          # Support multi-line string replacement using variables
-          # For multi-line strings, use perl for better handling
-          find . -name "*.html" -type f -exec perl -i.bak -pe "s/\Q${{ env.FIND_STRING }}\E/${{ env.REPLACE_STRING }}/g" {} \;
+          # Support multi-line string replacement using environment variables
+          # Use Perl with $ENV{} to access environment variables properly
+          find . -name "*.html" -type f -exec perl -i.bak -pe 's/\Q$ENV{FIND_STRING}\E/$ENV{REPLACE_STRING}/g' {} \;
           # Clean up backup files
           find . -name "*.html.bak" -type f -delete
           
-          # Future enhancement: Replace placeholders with secrets (multi-line GA4 script example)
-          # Example with multi-line replacement:
-          # env:
-          #   GA4_SCRIPT: |
-          #     <!-- Google tag (gtag.js) -->
-          #     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-          #     <script>
-          #       window.dataLayer = window.dataLayer || [];
-          #       function gtag(){dataLayer.push(arguments);}
-          #       gtag('js', new Date());
-          #       gtag('config', 'GA_MEASUREMENT_ID');
-          #     </script>
-          # find . -name "*.html" -type f -exec perl -i.bak -pe "s/GA4_PLACEHOLDER/${{ env.GA4_SCRIPT }}/g" {} \;        
+          # Note: This approach uses environment variables within Perl to handle multi-line replacements
+          # The key is using $ENV{VARIABLE_NAME} instead of direct shell interpolation
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
