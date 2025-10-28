@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA4 Sandbox - Index</title>
+    <style>
+      body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 20px; }
+      section { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+      h1, h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
+      a, button { display: inline-block; padding: 10px 15px; margin: 5px 0; background-color: #007bff; color: white; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; }
+      form input { display: block; margin-bottom: 10px; padding: 8px; width: 95%; }
+      .long-content { height: 1500px; background: #f9f9f9; border: 1px dashed #ddd; padding: 10px; }
+    </style>
+    <!-- Google Tag Manager HEAD スニペットをここに貼り付け -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) スニペットをここに貼り付け -->
+
+    <h1>GA4総合テストページ</h1>
+
+    <section>
+      <h2>拡張計測テスト</h2>
+      <p><a href="https://www.google.com" target="_blank">1. 外部リンク (clickイベント)</a></p>
+      <p><a href="/assets/dummy.pdf" download>2. ファイルダウンロード (file_downloadイベント)</a></p>
+      <p>↓ ページ下部までスクロールしてください (scrollイベント)</p>
+    </section>
+
+    <section>
+      <h2>コンバージョン & キーイベント テスト</h2>
+      
+      <h3>3. リード獲得 (generate_lead)</h3>
+      <form action="./thanks/" method="get">
+        <label for="name">お名前:</label>
+        <input type="text" id="name" name="name" placeholder="テスト太郎">
+        <button type="submit">フォーム送信 (→ ./thanks/)</button>
+      </form>
+
+      <h3>4. 購入 (purchase)</h3>
+      <a href="./thanks/?purchase=true">購入ボタン (→ ./thanks/)</a>
+
+      <h3>5. キーイベント (cta_click)</h3>
+      <button id="key-event-cta">キーイベント用CTAボタン</button>
+    </section>
+
+    <section>
+      <h2>クロスドメイン計測テスト</h2>
+      <p><a href="https://[あなたの別ドメイン]/sub-domain.html">6. 別ドメインへ遷移</a></p>
+    </section>
+
+    <div class="long-content">
+      <p>スクロールテスト用の領域です。この領域の一番下までスクロールするとscrollイベントが発火します。</p>
+    </div>
+
+  </body>
+</html>
