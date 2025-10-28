@@ -51,7 +51,7 @@ jobs:
         run: |
           # Support multi-line string replacement using environment variables
           # Use Perl with $ENV{} to access environment variables properly
-          find . -name "*.html" -type f -exec perl -i.bak -pe 's/\Q$ENV{FIND_STRING}\E/$ENV{REPLACE_STRING}/g' {} \;
+          find . -name "*.html" -type f -exec perl -i.bak -pe "s/\Q\$ENV{FIND_STRING}\E/\$ENV{REPLACE_STRING}/g" {} \;
           # Clean up backup files
           find . -name "*.html.bak" -type f -delete
           
