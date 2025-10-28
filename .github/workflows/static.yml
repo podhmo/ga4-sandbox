@@ -9,6 +9,13 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Define variables for string replacement
+env:
+  FIND_STRING: "hello"
+  REPLACE_STRING: |
+    hello world
+    <!-- This demonstrates multi-line replacement capability -->
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -34,13 +41,25 @@ jobs:
       - name: Find and Replace
         shell: bash
         run: |
-          # Replace 'hello' with 'hello world' in all HTML files
-          find . -name "*.html" -type f -exec sed -i.bak 's/hello/hello world/g' {} \;
+          # Support multi-line string replacement using variables
+          # For multi-line strings, use perl for better handling
+          find . -name "*.html" -type f -exec perl -i.bak -pe "s/\Q${{ env.FIND_STRING }}\E/${{ env.REPLACE_STRING }}/g" {} \;
           # Clean up backup files
           find . -name "*.html.bak" -type f -delete
           
-          # Future enhancement: Replace placeholders with secrets
-          # Example: find . -name "*.html" -type f -exec sed -i.bak "s/GA4_PLACEHOLDER/${{ secrets.GA4_TRACKING_ID }}/g" {} \; && find . -name "*.html.bak" -type f -delete        
+          # Future enhancement: Replace placeholders with secrets (multi-line GA4 script example)
+          # Example with multi-line replacement:
+          # env:
+          #   GA4_SCRIPT: |
+          #     <!-- Google tag (gtag.js) -->
+          #     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+          #     <script>
+          #       window.dataLayer = window.dataLayer || [];
+          #       function gtag(){dataLayer.push(arguments);}
+          #       gtag('js', new Date());
+          #       gtag('config', 'GA_MEASUREMENT_ID');
+          #     </script>
+          # find . -name "*.html" -type f -exec perl -i.bak -pe "s/GA4_PLACEHOLDER/${{ env.GA4_SCRIPT }}/g" {} \;        
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
