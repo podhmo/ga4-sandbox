@@ -32,12 +32,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Find and Replace
+        shell: bash
         run: |
           # Replace 'hello' with 'hello world' in all HTML files
-          find . -name "*.html" -type f -exec sed -i 's/hello/hello world/g' {} \;
+          find . -name "*.html" -type f -exec sed -i.bak 's/hello/hello world/g' {} \;
+          # Clean up backup files
+          find . -name "*.html.bak" -type f -delete
           
           # Future enhancement: Replace placeholders with secrets
-          # Example: find . -name "*.html" -type f -exec sed -i "s/GA4_PLACEHOLDER/${{ secrets.GA4_TRACKING_ID }}/g" {} \;        
+          # Example: find . -name "*.html" -type f -exec sed -i.bak "s/GA4_PLACEHOLDER/${{ secrets.GA4_TRACKING_ID }}/g" {} \; && find . -name "*.html.bak" -type f -delete        
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
