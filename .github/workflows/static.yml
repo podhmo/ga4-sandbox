@@ -11,7 +11,7 @@ on:
 
 # Define variables for string replacement
 env:
-  FIND_STRING: "<GA4_SCRIPT/>"
+  FIND_STRING: "{{GA4_SCRIPT}}"
   REPLACE_STRING: |
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXBZRS2RDH"></script>
