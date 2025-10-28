@@ -31,14 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/checkout@v3
       - name: Find and Replace
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "hello"
-          replace: "hello world"
-          include: "**/*.html"
-          regex: false        
+        run: |
+          # Replace 'hello' with 'hello world' in all HTML files
+          find . -name "*.html" -type f -exec sed -i 's/hello/hello world/g' {} \;
+          
+          # Future enhancement: Replace placeholders with secrets
+          # Example: find . -name "*.html" -type f -exec sed -i "s/GA4_PLACEHOLDER/${{ secrets.GA4_TRACKING_ID }}/g" {} \;        
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
